@@ -1,52 +1,78 @@
 /* Name: Yusra Irfan
-Date: 29 Jan 2018
-Program’s mission: This program calculates grades
+Date: 15 March 2018
 */
 
 #include <iostream>
-#include <cmath>
 using namespace std;
+bool isValidGrade(double grade);
+bool isValidWeight(double weight);
+bool isValidTotalWeight(double weight[]);//takes in all the weights(the array)
+int main() {
+	//array holding 4 doubles --allGrades
+	double allGrades[4];
+	//array holding 4 doubles --allWeights
+	double allWeights[4];
+	double finalGrade = 0;
 
-int main1() {
-	//declaring all variable
-	double grade1, grade2, grade3, grade4;
-	double weight1, weight2, weight3, weight4;
-	double finalGrade;
-
-	// info and a message that describes the mission
 	cout << "***************************************************" << endl;
-	cout << "Program’s mission: This program calculates grades" << endl
+	cout<< "Program's mission: Grade Calculator with Arrays" << endl
 		<< "***************************************************" << endl;
-	//Gets all the grades and weight from the user
-	cout << "Enter the First Grade: ";
-	cin >> grade1;
 
-	cout << "Enter the First Grade Weight: ";
-	cin >> weight1;
+	do {//validate if weights add up to four otherwise reenter all of them
+		for (int i = 0; i < 4; i++) {//loop for 4 grades 
+			do {//validate each one  in a do while loop
+				cout << "Input grade " << i + 1 << " (0-100): ";
+				cin >> allGrades[i];//cin for grades
 
-	cout << "Enter the Second Grade: ";
-	cin >> grade2;
+			} while (!(isValidGrade(allGrades[i])));
 
-	cout << "Enter the Second Grade Weight: ";
-	cin >> weight2;
+			do {//validate each one  in a do while loop
+				cout << "Input Weight " << i + 1 << " (0.0-1.0): ";
+				cin >> allWeights[i];//cin for weights
 
-	cout << "Enter the Third Grade: ";
-	cin >> grade3;
+			} while (!(isValidWeight(allWeights[i])));
+		}
+	} while (!(isValidTotalWeight(allWeights)));
 
-	cout << "Enter the Third Grade Weight: ";
-	cin >> weight3;
+	for (int i = 0; i < 4; i++) {
+		finalGrade += (allGrades[i] * allWeights[i]);
+	}
+	cout << "The course grade is: " << finalGrade << endl;
+	return 0;
+}
 
-	cout << "Enter the Fourth Grade: ";
-	cin >> grade4;
 
-	cout << "Enter the Fourth Grade Weight: ";
-	cin >> weight4;
-	
-	//calculates the final grade
-	finalGrade = grade1*weight1 + grade2*weight2 + grade3*weight3 + grade4*weight4;
-	
-	//prints out the final grade
-	cout << "The final grade is: " << finalGrade << endl;
+bool isValidGrade(double grade)//validaate each grade
+{
+	if (grade <= 100 && grade >= 0)
+		return true;
+	else {
+		cout << "Invalid Grade input" << endl;
+		return false;
+	}
+}
 
-	return 0; 
+bool isValidWeight(double weight)
+{
+	if (weight <= 1 && weight >= 0)
+		return true;
+	else {
+		cout << "Invalid Weight input" << endl;
+		return false;
+	}
+}
+
+bool isValidTotalWeight(double weight[])
+{
+	float total = 0;
+	for (int i = 0; i < 4; i++) {
+		total += weight[i];
+	}
+	if (total == 1)
+		return true;
+	else
+	{
+		cout << "weights do not equal to 1" << endl;
+		return false;
+	}
 }
